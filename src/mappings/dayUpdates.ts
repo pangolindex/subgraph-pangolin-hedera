@@ -2,7 +2,7 @@ import {Pair, PairHourData} from '../../generated/schema'
 /* eslint-disable prefer-const */
 import {BigInt, BigDecimal, ethereum} from '@graphprotocol/graph-ts'
 import {Bundle, Token, PangolinFactory, PangolinDayData, PairDayData, TokenDayData} from '../../generated/schema'
-import {ONE_BI, ZERO_BD, ZERO_BI, loadPair} from './helpers'
+import {ONE_BI, ZERO_BD, ZERO_BI} from './helpers'
 
 export function updatePangolinDayData(event: ethereum.Event): PangolinDayData {
     let pangolin = PangolinFactory.load('1')!
@@ -36,7 +36,7 @@ export function updatePairDayData(event: ethereum.Event): PairDayData {
         .toHexString()
         .concat('-')
         .concat(BigInt.fromI32(dayID).toString())
-    let pair = loadPair(event.address.toHexString())!
+    let pair = Pair.load(event.address.toHexString())!
     let pairDayData = PairDayData.load(dayPairID)
     if (pairDayData === null) {
         pairDayData = new PairDayData(dayPairID)
@@ -68,7 +68,7 @@ export function updatePairHourData(event: ethereum.Event): PairHourData {
         .toHexString()
         .concat('-')
         .concat(BigInt.fromI32(hourIndex).toString())
-    let pair = loadPair(event.address.toHexString())!
+    let pair = Pair.load(event.address.toHexString())!
     let pairHourData = PairHourData.load(hourPairID)
     if (pairHourData === null) {
         pairHourData = new PairHourData(hourPairID)

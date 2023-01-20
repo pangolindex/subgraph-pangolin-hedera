@@ -2,11 +2,10 @@
 import {log} from '@graphprotocol/graph-ts'
 import {PangolinFactory, Pair, PairLookup, Token, Bundle} from '../../generated/schema'
 import {PairCreated} from '../../generated/Factory/Factory'
-// import { Pair as PairTemplate } from '../../generated/templates'
+import {Pair as PairTemplate} from '../../generated/templates'
 import {
     ZERO_BD,
     ZERO_BI,
-    convertPairAddress,
     _fetchTokenSymbol,
     _fetchTokenName,
     _fetchTokenDecimals
@@ -81,10 +80,7 @@ export function handleNewPair(event: PairCreated): void {
         token1.txCount = ZERO_BI
     }
 
-    // Manually convert Pair create2 addresses
-    let pairAddress = convertPairAddress(event.params.pair.toHexString())
-
-    let pair = new Pair(pairAddress.toHexString()) as Pair
+    let pair = new Pair(event.params.pair.toHexString()) as Pair
     pair.token0 = token0.id
     pair.token1 = token1.id
     pair.createdAtTimestamp = event.block.timestamp
@@ -107,15 +103,15 @@ export function handleNewPair(event: PairCreated): void {
     // create pair lookup and reverse lookup
     let pairLookupIdAB = event.params.token0.toHexString().concat('-').concat(event.params.token1.toHexString())
     let pairLookupAB = new PairLookup(pairLookupIdAB)
-    pairLookupAB.pairAddress = pairAddress
+    pairLookupAB.pairAddress = event.params.pair
     pairLookupAB.save()
     let pairLookupIdBA = event.params.token1.toHexString().concat('-').concat(event.params.token0.toHexString())
     let pairLookupBA = new PairLookup(pairLookupIdBA)
-    pairLookupBA.pairAddress = pairAddress
+    pairLookupBA.pairAddress = event.params.pair
     pairLookupBA.save()
 
     // create the tracked contract based on the template
-    // PairTemplate.create(pairAddress)
+    PairTemplate.create(event.params.pair)
 
     // save updated values
     token0.save()

@@ -148,6 +148,12 @@
         "internalType": "address",
         "name": "tokenOrRecipient",
         "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "pairContract",
+        "type": "address"
       }
     ],
     "name": "PoolInitialized",
@@ -420,7 +426,12 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "poolId",
+        "name": "harvestPoolId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "compoundPoolId",
         "type": "uint256"
       },
       {
@@ -441,7 +452,7 @@
         "type": "tuple"
       }
     ],
-    "name": "compoundToPoolZero",
+    "name": "compoundTo",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function"
@@ -472,6 +483,11 @@
         "internalType": "uint256",
         "name": "poolId",
         "type": "uint256"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "confirmation",
+        "type": "bytes32"
       }
     ],
     "name": "emergencyExitLevel2",
@@ -494,6 +510,30 @@
         "internalType": "contract IPangolinFactory",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "poolId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "userId",
+        "type": "address"
+      }
+    ],
+    "name": "getLockedPools",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "",
+        "type": "uint256[]"
       }
     ],
     "stateMutability": "view",
@@ -623,9 +663,9 @@
             "type": "uint48"
           },
           {
-            "internalType": "bool",
-            "name": "isLockingPoolZero",
-            "type": "bool"
+            "internalType": "uint56",
+            "name": "lockCount",
+            "type": "uint56"
           },
           {
             "internalType": "uint48",
@@ -650,7 +690,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "user",
+        "name": "userId",
         "type": "address"
       }
     ],
@@ -725,6 +765,11 @@
       {
         "internalType": "address",
         "name": "tokenOrRecipient",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "pairContract",
         "type": "address"
       },
       {
@@ -815,25 +860,6 @@
       }
     ],
     "name": "poolRewardRate",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      }
-    ],
-    "name": "poolZeroLockCount",
     "outputs": [
       {
         "internalType": "uint256",

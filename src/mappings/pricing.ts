@@ -1,7 +1,7 @@
 /* eslint-disable prefer-const */
 import {BigDecimal} from '@graphprotocol/graph-ts'
 import {Pair, Token, Bundle, PairLookup} from '../../generated/schema'
-import {ZERO_BD, ADDRESS_ZERO, ONE_BD, WHBAR_ADDRESS, TWO_BD, WHBAR_USDC_PAIR, loadPair} from './helpers'
+import {ZERO_BD, ADDRESS_ZERO, ONE_BD, WHBAR_ADDRESS, TWO_BD, WHBAR_USDC_PAIR} from './helpers'
 
 let AVERAGE_WHBAR_PRICE_PRE_STABLES = BigDecimal.fromString('1')
 
@@ -10,7 +10,7 @@ export function getAVAXPriceInUSD(): BigDecimal {
     let usdcPair = Pair.load(WHBAR_USDC_PAIR)
 
     if (usdcPair != null) {
-        return usdcPair.token0 == WHBAR_ADDRESS ? usdcPair.token0Price : usdcPair.token1Price
+        return usdcPair.token0 == WHBAR_ADDRESS ? usdcPair.token1Price : usdcPair.token0Price
     } else {
         return AVERAGE_WHBAR_PRICE_PRE_STABLES
     }
@@ -38,7 +38,7 @@ export function findEthPerToken(token: Token): BigDecimal {
         let pairAddress = pairLookup == null ? ADDRESS_ZERO : pairLookup.pairAddress.toHexString()
 
         if (pairAddress != ADDRESS_ZERO) {
-            let pair = loadPair(pairAddress)!
+            let pair = Pair.load(pairAddress)!
             if (pair.token0 == token.id && pair.reserveETH.gt(MINIMUM_LIQUIDITY_THRESHOLD_ETH)) {
                 let token1 = Token.load(pair.token1)!
                 return pair.token1Price.times(token1.derivedETH as BigDecimal) // return token1 per our token * Eth per token 1

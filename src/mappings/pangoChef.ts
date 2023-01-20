@@ -1,11 +1,9 @@
 import {Address, BigInt} from "@graphprotocol/graph-ts"
-import {Farm, FarmingPosition, FarmReward, FarmRewarder, PangoChef, Token, User} from "../../generated/schema"
+import {Farm, FarmingPosition, FarmReward, FarmRewarder, PangoChef, Pair, Token, User} from "../../generated/schema"
 import {
     convertTokenToDecimal,
     ZERO_BI,
     ZERO_BD,
-    PANGO_CHEF_INITIAL_WEIGHT,
-    PANGO_CHEF_INITIAL_PERIOD_DURATION,
     PNG_ADDRESS,
     PGL_DECIMALS,
     ONE_BI,
@@ -23,6 +21,10 @@ import {
     WeightSet,
     Withdrawn,
 } from "../../generated/PangoChef/PangoChef"
+
+// Both of these values are hardcoded in PangoChef
+let PANGO_CHEF_INITIAL_WEIGHT = BigInt.fromI32(1000)
+let PANGO_CHEF_INITIAL_PERIOD_DURATION = BigInt.fromI32(86400)
 
 export function handlePoolInitialized(event: PoolInitialized): void {
     const chefAddress = event.address
@@ -53,6 +55,16 @@ export function handlePoolInitialized(event: PoolInitialized): void {
     farm.tvl = ZERO_BD
     farm.rewarder = rewarderKey
     farm.chef = chefKey
+
+    // Conditionally add Pair if the Farm recipient is a known pair
+    const pairContractAddressHexString = event.params.pairContract.toHexString()
+    if (pairContractAddressHexString != ADDRESS_ZERO) {
+        const nullablePair = Pair.load(pairContractAddressHexString)
+        if (nullablePair != null) {
+            farm.pair = nullablePair.id
+        }
+    }
+
     farm.save()
 
     createFarmRewarder(chefAddress, rewarderAddress, pid)

@@ -266,6 +266,7 @@ type Farm @entity {
   id: ID!
   pid: BigInt!
   tokenOrRecipientAddress: Bytes!
+  pair: Pair # could be null when recipient is not a Pair
   tvl: BigDecimal!
   weight: BigInt!
   rewarder: FarmRewarder!

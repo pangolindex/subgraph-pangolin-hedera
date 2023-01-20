@@ -2,6 +2,7 @@
 import {BigInt, BigDecimal, store, Address} from '@graphprotocol/graph-ts'
 import {
     Token,
+    Pair,
     PangolinFactory,
     Transaction,
     Mint as MintEvent,
@@ -13,7 +14,6 @@ import {LogicalMint, LogicalBurn, Mint, Burn, Swap, Sync} from '../../generated/
 import {updatePairDayData, updateTokenDayData, updatePangolinDayData, updatePairHourData} from './dayUpdates'
 import {getAVAXPriceInUSD, findEthPerToken, getTrackedVolumeUSD, getTrackedLiquidityUSD} from './pricing'
 import {
-    loadPair,
     convertTokenToDecimal,
     ADDRESS_ZERO,
     ROUTER_ADDRESS,
@@ -47,7 +47,7 @@ export function handleLogicalMint(event: LogicalMint): void {
 
     let value = convertTokenToDecimal(event.params.value, PGL_DECIMALS)
 
-    let pair = loadPair(event.address.toHexString())!
+    let pair = Pair.load(event.address.toHexString())!
     pair.totalSupply = pair.totalSupply.plus(value)
     pair.save()
 
@@ -97,7 +97,7 @@ export function handleLogicalBurn(event: LogicalBurn): void {
     }
 
     let value = convertTokenToDecimal(event.params.value, PGL_DECIMALS)
-    let pair = loadPair(event.address.toHexString())!
+    let pair = Pair.load(event.address.toHexString())!
     pair.totalSupply = pair.totalSupply.minus(value)
     pair.save()
 
@@ -132,7 +132,7 @@ export function handleLogicalBurn(event: LogicalBurn): void {
 }
 
 export function handleSync(event: Sync): void {
-    let pair = loadPair(event.address.toHexString())!
+    let pair = Pair.load(event.address.toHexString())!
     let token0 = Token.load(pair.token0)!
     let token1 = Token.load(pair.token1)!
     let pangolin = PangolinFactory.load('1')!
@@ -203,7 +203,7 @@ export function handleMint(event: Mint): void {
     let mints = transaction.mints
     let mint = MintEvent.load(mints[mints.length - 1])!
 
-    let pair = loadPair(event.address.toHexString())!
+    let pair = Pair.load(event.address.toHexString())!
     let pangolin = PangolinFactory.load('1')!
 
     let token0 = Token.load(pair.token0)!
@@ -254,7 +254,7 @@ export function handleBurn(event: Burn): void {
     let burns = transaction.burns
     let burn = BurnEvent.load(burns[burns.length - 1])!
 
-    let pair = loadPair(event.address.toHexString())!
+    let pair = Pair.load(event.address.toHexString())!
     let pangolin = PangolinFactory.load('1')!
 
     //update token info
@@ -309,7 +309,7 @@ export function handleSwap(event: Swap): void {
         dest = event.params.to
     }
 
-    let pair = loadPair(event.address.toHexString())!
+    let pair = Pair.load(event.address.toHexString())!
     let token0 = Token.load(pair.token0)!
     let token1 = Token.load(pair.token1)!
     let amount0In = convertTokenToDecimal(event.params.amount0In, token0.decimals)
