@@ -20,3 +20,7 @@ generated/
 # System Files
 .DS_Store
 Thumbs.db
+
+# Templating
+subgraph.yaml
+src/mappings/helpers.ts

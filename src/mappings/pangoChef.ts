@@ -82,15 +82,13 @@ export function handleStaked(event: Staked): void {
 
     createUser(event.params.userId)
 
-    const toUserStakingPosition = createStakingPosition(
+    const userStakingPosition = createStakingPosition(
         chefAddress,
         event.params.userId,
         farm.pid
     )
-    toUserStakingPosition.stakedTokenBalance = toUserStakingPosition.stakedTokenBalance.plus(
-        convertedAmount
-    )
-    toUserStakingPosition.save()
+    userStakingPosition.stakedTokenBalance = userStakingPosition.stakedTokenBalance.plus(convertedAmount)
+    userStakingPosition.save()
 }
 
 export function handleWithdrawn(event: Withdrawn): void {
@@ -104,15 +102,13 @@ export function handleWithdrawn(event: Withdrawn): void {
 
     createUser(event.params.userId)
 
-    const fromUserStakingPosition = createStakingPosition(
+    const userStakingPosition = createStakingPosition(
         chefAddress,
         event.params.userId,
         farm.pid
     )
-    fromUserStakingPosition.stakedTokenBalance = fromUserStakingPosition.stakedTokenBalance.minus(
-        convertedAmount
-    )
-    fromUserStakingPosition.save()
+    userStakingPosition.stakedTokenBalance = userStakingPosition.stakedTokenBalance.minus(convertedAmount)
+    userStakingPosition.save()
 }
 
 export function handleRewarderSet(event: RewarderSet): void {

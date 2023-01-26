@@ -4,16 +4,23 @@
   "license": "MIT",
   "scripts": {
     "codegen": "graph codegen",
-    "build": "graph build",
-    "create": "graph create --node http://34.139.80.90:8020/ pangolin",
-    "create-local": "graph create --node http://localhost:8020/ pangolin",
-    "remove": "graph remove --node http://34.139.80.90:8020/ pangolin",
-    "remove-local": "graph remove --node http://localhost:8020/ pangolin",
-    "deploy": "graph deploy --node http://34.139.80.90:8020/ --ipfs http://34.139.80.90:5001 pangolin",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 pangolin"
+    "prepare:testnet": "mustache config/testnet.json subgraph.template.yaml > subgraph.yaml && mustache config/testnet.json src/mappings/helpers.template.ts > src/mappings/helpers.ts",
+    "prepare:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml && mustache config/mainnet.json src/mappings/helpers.template.ts > src/mappings/helpers.ts",
+    "build:testnet": "yarn prepare:testnet && graph build",
+    "build:mainnet": "yarn prepare:mainnet && graph build",
+    "create:local": "graph create --node http://localhost:8020 pangolin",
+    "create:testnet": "graph create --node https://hedera-test.pangolin.network:8020 pangolin",
+    "create:mainnet": "graph create --node https://hedera-graph.pangolin.network:8020 pangolin",
+    "remove:local": "graph remove --node http://localhost:8020 pangolin",
+    "remove:testnet": "graph remove --node https://hedera-test.pangolin.network:8020 pangolin",
+    "remove:mainnet": "graph remove --node https://hedera-graph.pangolin.network:8020 pangolin",
+    "deploy:local": "graph deploy --node http://localhost:8020 --ipfs http://localhost:5001 pangolin",
+    "deploy:testnet": "graph deploy --node https://hedera-test.pangolin.network:8020 --ipfs http://34.139.80.90:5001 pangolin",
+    "deploy:mainnet": "graph deploy --node https://hedera-graph.pangolin.network:8020 --ipfs http://35.196.190.153:5001 pangolin"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "0.33.0",
-    "@graphprotocol/graph-ts": "0.27.0"
+    "@graphprotocol/graph-ts": "0.27.0",
+    "mustache": "4.2.0"
   }
 }

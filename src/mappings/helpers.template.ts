@@ -1,3 +1,4 @@
+/* Generated from mustache template for network: {{network}} */
 /* eslint-disable prefer-const */
 import {BigInt, BigDecimal, Address} from "@graphprotocol/graph-ts"
 import {ERC20} from "../../generated/Factory/ERC20"
@@ -5,10 +6,10 @@ import {ERC20SymbolBytes} from "../../generated/Factory/ERC20SymbolBytes"
 import {ERC20NameBytes} from "../../generated/Factory/ERC20NameBytes"
 import {RewarderViaMultiplierForPangoChef} from "../../generated/PangoChef/RewarderViaMultiplierForPangoChef";
 
-export const ROUTER_ADDRESS = '0x0000000000000000000000000000000002f0c964'
-export const WHBAR_ADDRESS = '0x0000000000000000000000000000000002dfa5b2'
-export const PNG_ADDRESS = '0x0000000000000000000000000000000002f0c95d'
-export const WHBAR_USDC_PAIR = '0x64d3059c80f2b5fe5f2c6253d11b3729ae34a20b'
+export const ROUTER_ADDRESS = '{{PangolinRouter}}'
+export const WHBAR_ADDRESS = '{{WHBAR (HTS)}}'
+export const PNG_ADDRESS = '{{PNG (HTS)}}'
+export const WHBAR_USDC_PAIR = '{{Pair PNG/WHBAR (Contract)}}'
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
 
 export let ZERO_BI = BigInt.fromI32(0)
