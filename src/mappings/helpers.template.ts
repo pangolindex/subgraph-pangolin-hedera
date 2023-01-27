@@ -7,9 +7,9 @@ import {ERC20NameBytes} from "../../generated/Factory/ERC20NameBytes"
 import {RewarderViaMultiplierForPangoChef} from "../../generated/PangoChef/RewarderViaMultiplierForPangoChef";
 
 export const ROUTER_ADDRESS = '{{PangolinRouter}}'
-export const WHBAR_ADDRESS = '{{WHBAR (HTS)}}'
-export const PNG_ADDRESS = '{{PNG (HTS)}}'
-export const WHBAR_USDC_PAIR = '{{Pair PNG/WHBAR (Contract)}}'
+export const WHBAR_ADDRESS = '{{WHBAR}}'
+export const PNG_ADDRESS = '{{PBAR}}'
+export const WHBAR_USDC_PAIR = '{{StablePair}}'
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
 
 export let ZERO_BI = BigInt.fromI32(0)
