@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "codegen": "graph codegen",
-    "prepare:testnet": "mustache config/testnet.json subgraph.template.yaml > subgraph.yaml && mustache config/testnet.json src/mappings/helpers.template.ts > src/mappings/helpers.ts",
-    "prepare:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml && mustache config/mainnet.json src/mappings/helpers.template.ts > src/mappings/helpers.ts",
+    "prepare:testnet": "mustache config/testnet.json subgraph.template.yaml > subgraph.yaml && mustache config/testnet.json src/mappings/helpers.template.ts > src/mappings/helpers.ts && mustache config/testnet.json src/mappings/pricing.template.ts > src/mappings/pricing.ts",
+    "prepare:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml && mustache config/mainnet.json src/mappings/helpers.template.ts > src/mappings/helpers.ts && mustache config/mainnet.json src/mappings/pricing.template.ts > src/mappings/pricing.ts",
     "build:testnet": "yarn prepare:testnet && graph build",
     "build:mainnet": "yarn prepare:mainnet && graph build",
     "create:local": "graph create --node http://localhost:8020 pangolin",

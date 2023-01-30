@@ -1,3 +1,4 @@
+/* Generated from mustache template for network: {{network}} */
 /* eslint-disable prefer-const */
 import {BigDecimal} from '@graphprotocol/graph-ts'
 import {Pair, Token, Bundle, PairLookup} from '../../generated/schema'
@@ -18,7 +19,9 @@ export function getAVAXPriceInUSD(): BigDecimal {
 
 // token where amounts should contribute to tracked volume and liquidity
 let WHITELIST: string[] = [
-    WHBAR_ADDRESS,
+    {{#WhitelistPricing}}
+    "{{.}}",
+    {{/WhitelistPricing}}
 ]
 
 // minimum liquidity for price to get tracked

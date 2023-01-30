@@ -24,3 +24,4 @@ Thumbs.db
 # Templating
 subgraph.yaml
 src/mappings/helpers.ts
+src/mappings/pricing.ts
