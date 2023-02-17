@@ -91,7 +91,7 @@ export function handleNewPair(event: PairCreated): void {
     pair.trackedReserveETH = ZERO_BD
     pair.reserveETH = ZERO_BD
     pair.reserveUSD = ZERO_BD
-    pair.totalSupply = ZERO_BD
+    pair.totalSupply = ZERO_BI
     pair.volumeToken0 = ZERO_BD
     pair.volumeToken1 = ZERO_BD
     pair.volumeUSD = ZERO_BD

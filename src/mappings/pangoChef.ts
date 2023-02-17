@@ -1,11 +1,9 @@
 import {Address, BigInt} from "@graphprotocol/graph-ts"
 import {Farm, FarmingPosition, FarmReward, FarmRewarder, PangoChef, Pair, Token, User} from "../../generated/schema"
 import {
-    convertTokenToDecimal,
     ZERO_BI,
     ZERO_BD,
     PNG_ADDRESS,
-    PGL_DECIMALS,
     ONE_BI,
     ADDRESS_ZERO,
     _fetchRewardTokens,
@@ -52,7 +50,9 @@ export function handlePoolInitialized(event: PoolInitialized): void {
     farm.pid = pid
     farm.tokenOrRecipientAddress = event.params.tokenOrRecipient
     farm.weight = pid.isZero() ? PANGO_CHEF_INITIAL_WEIGHT : ZERO_BI
-    farm.tvl = ZERO_BD
+    farm.tvl = ZERO_BD // TODO: remove deprecated
+    farm.balance = ZERO_BI
+    farm.sumOfEntryTimes = ZERO_BI
     farm.rewarder = rewarderKey
     farm.chef = chefKey
 
@@ -72,42 +72,61 @@ export function handlePoolInitialized(event: PoolInitialized): void {
 
 export function handleStaked(event: Staked): void {
     const chefAddress = event.address
-    const pid = event.params.positionId
-    const farmKey = chefAddress.toHexString() + "-" + pid.toHexString()
-    const convertedAmount = convertTokenToDecimal(event.params.amount, PGL_DECIMALS)
-
-    const farm = Farm.load(farmKey)!
-    farm.tvl = farm.tvl.plus(convertedAmount)
-    farm.save()
+    const farmKey = chefAddress.toHexString() + "-" + event.params.positionId.toHexString()
+    const amount = event.params.amount
 
     createUser(event.params.userId)
 
     const userStakingPosition = createStakingPosition(
         chefAddress,
         event.params.userId,
-        farm.pid
+        event.params.positionId
     )
-    userStakingPosition.stakedTokenBalance = userStakingPosition.stakedTokenBalance.plus(convertedAmount)
+
+    const oldBalance = userStakingPosition.balance
+    const addedEntryTimes = event.block.timestamp.times(amount)
+
+    const farm = Farm.load(farmKey)!
+    farm.tvl = farm.tvl.plus(amount.toBigDecimal()) // TODO: remove deprecated
+    farm.balance = farm.balance.plus(amount)
+    farm.sumOfEntryTimes = farm.sumOfEntryTimes.plus(addedEntryTimes)
+    farm.save()
+
+    // userStakingPosition.previousValues = userStakingPosition.previousValues.plus(oldBalance.times(event.block.timestamp.minus(userStakingPosition.lastUpdate)))
+    userStakingPosition.stakedTokenBalance = userStakingPosition.stakedTokenBalance.plus(amount.toBigDecimal()) // TODO: remove deprecated
+    userStakingPosition.balance = oldBalance.plus(amount)
+    userStakingPosition.sumOfEntryTimes = userStakingPosition.sumOfEntryTimes.plus(addedEntryTimes)
+    userStakingPosition.lastUpdate = event.block.timestamp
     userStakingPosition.save()
 }
 
 export function handleWithdrawn(event: Withdrawn): void {
     const chefAddress = event.address
     const farmKey = chefAddress.toHexString() + "-" + event.params.positionId.toHexString()
-    const convertedAmount = convertTokenToDecimal(event.params.amount, PGL_DECIMALS)
-
-    const farm = Farm.load(farmKey)!
-    farm.tvl = farm.tvl.minus(convertedAmount)
-    farm.save()
+    const amount = event.params.amount
 
     createUser(event.params.userId)
 
     const userStakingPosition = createStakingPosition(
         chefAddress,
         event.params.userId,
-        farm.pid
+        event.params.positionId
     )
-    userStakingPosition.stakedTokenBalance = userStakingPosition.stakedTokenBalance.minus(convertedAmount)
+
+    const oldBalance = userStakingPosition.balance
+    const remaining = oldBalance.minus(amount)
+    const newEntryTimes = event.block.timestamp.times(remaining)
+
+    const farm = Farm.load(farmKey)!
+    farm.tvl = farm.tvl.minus(amount.toBigDecimal()) // TODO: remove deprecated
+    farm.balance = farm.balance.minus(amount)
+    farm.sumOfEntryTimes = farm.sumOfEntryTimes.plus(newEntryTimes).minus(userStakingPosition.sumOfEntryTimes)
+    farm.save()
+
+    userStakingPosition.stakedTokenBalance = userStakingPosition.stakedTokenBalance.minus(amount.toBigDecimal()) // TODO: remove deprecated
+    userStakingPosition.balance = remaining
+    userStakingPosition.sumOfEntryTimes = newEntryTimes
+    userStakingPosition.lastUpdate = event.block.timestamp
     userStakingPosition.save()
 }
 
@@ -252,7 +271,10 @@ function createStakingPosition(
     if (farmingPosition === null) {
         const farmKey = chefAddress.toHexString() + "-" + pid.toHexString()
         farmingPosition = new FarmingPosition(farmingPositionKey)
-        farmingPosition.stakedTokenBalance = ZERO_BD
+        farmingPosition.stakedTokenBalance = ZERO_BD // TODO: remove deprecated
+        farmingPosition.balance = ZERO_BI
+        farmingPosition.sumOfEntryTimes = ZERO_BI
+        farmingPosition.lastUpdate = ZERO_BI
         farmingPosition.farm = farmKey
         farmingPosition.user = userAddress.toHexString()
         farmingPosition.save()

@@ -61,7 +61,7 @@ type Pair @entity {
   token1: Token!
   reserve0: BigDecimal!
   reserve1: BigDecimal!
-  totalSupply: BigDecimal!
+  totalSupply: BigInt!
 
   # derived liquidity
   reserveETH: BigDecimal!
@@ -116,7 +116,7 @@ type Mint @entity {
 
   # populated from the primary LogicalMint event
   to: Bytes!
-  liquidity: BigDecimal!
+  liquidity: BigInt!
 
   # populated from the Mint event
   sender: Bytes
@@ -128,7 +128,7 @@ type Mint @entity {
 
   # optional fee fields, if a LogicalMint event is fired in _mintFee
   feeTo: Bytes
-  feeLiquidity: BigDecimal
+  feeLiquidity: BigInt
 }
 
 type Burn @entity {
@@ -139,7 +139,7 @@ type Burn @entity {
   pair: Pair!
 
   # populated from the primary LogicalBurn event
-  liquidity: BigDecimal!
+  liquidity: BigInt!
 
   # populated from the Burn event
   sender: Bytes
@@ -151,7 +151,7 @@ type Burn @entity {
 
   # optional fee fields, if a LogicalMint event is fired in _mintFee
   feeTo: Bytes
-  feeLiquidity: BigDecimal
+  feeLiquidity: BigInt
 }
 
 type Swap @entity {
@@ -230,7 +230,7 @@ type PairDayData @entity {
   reserve1: BigDecimal!
 
   # total supply for LP historical returns
-  totalSupply: BigDecimal!
+  totalSupply: BigInt!
 
   # derived liquidity
   reserveUSD: BigDecimal!
@@ -267,7 +267,9 @@ type Farm @entity {
   pid: BigInt!
   tokenOrRecipientAddress: Bytes!
   pair: Pair # could be null when recipient is not a Pair
-  tvl: BigDecimal!
+  tvl: BigDecimal! @deprecated
+  balance: BigInt!
+  sumOfEntryTimes: BigInt!
   weight: BigInt!
   rewarder: FarmRewarder!
   chef: PangoChef!
@@ -310,5 +312,8 @@ type FarmingPosition @entity {
   id: ID!
   user: User!
   farm: Farm!
-  stakedTokenBalance: BigDecimal!
+  stakedTokenBalance: BigDecimal! @deprecated
+  balance: BigInt!
+  sumOfEntryTimes: BigInt!
+  lastUpdate: BigInt!
 }

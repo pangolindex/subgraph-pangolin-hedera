@@ -20,7 +20,6 @@ import {
     ONE_BI,
     ZERO_BD,
     BI_MINIMUM_LIQUIDITY,
-    PGL_DECIMALS,
 } from './helpers'
 
 function isCompleteMint(mintId: string): boolean {
@@ -45,7 +44,7 @@ export function handleLogicalMint(event: LogicalMint): void {
         transaction.swaps = []
     }
 
-    let value = convertTokenToDecimal(event.params.value, PGL_DECIMALS)
+    let value = event.params.value
 
     let pair = Pair.load(event.address.toHexString())!
     pair.totalSupply = pair.totalSupply.plus(value)
@@ -96,7 +95,7 @@ export function handleLogicalBurn(event: LogicalBurn): void {
         transaction.swaps = []
     }
 
-    let value = convertTokenToDecimal(event.params.value, PGL_DECIMALS)
+    let value = event.params.value
     let pair = Pair.load(event.address.toHexString())!
     pair.totalSupply = pair.totalSupply.minus(value)
     pair.save()
