@@ -2,19 +2,23 @@
 /* eslint-disable prefer-const */
 import {BigDecimal} from '@graphprotocol/graph-ts'
 import {Pair, Token, Bundle, PairLookup} from '../../generated/schema'
-import {ZERO_BD, ADDRESS_ZERO, ONE_BD, WHBAR_ADDRESS, TWO_BD, WHBAR_USDC_PAIR} from './helpers'
+import {ZERO_BD, ADDRESS_ZERO, ONE_BD, WHBAR_ADDRESS, TWO_BD} from './helpers'
 
 let AVERAGE_WHBAR_PRICE_PRE_STABLES = BigDecimal.fromString('1')
 
 export function getAVAXPriceInUSD(): BigDecimal {
 
-    let usdcPair = Pair.load(WHBAR_USDC_PAIR)
+    let pair: Pair | null
 
-    if (usdcPair != null) {
-        return usdcPair.token0 == WHBAR_ADDRESS ? usdcPair.token1Price : usdcPair.token0Price
-    } else {
-        return AVERAGE_WHBAR_PRICE_PRE_STABLES
+    // Iterated 'StablePairs' from config
+    {{#StablePairs}}
+    pair = Pair.load("{{.}}")
+    if (pair != null) {
+        return pair.token0 == WHBAR_ADDRESS ? pair.token1Price : pair.token0Price
     }
+    {{/StablePairs}}
+
+    return AVERAGE_WHBAR_PRICE_PRE_STABLES
 }
 
 // token where amounts should contribute to tracked volume and liquidity

@@ -9,7 +9,6 @@ import {RewarderViaMultiplierForPangoChef} from "../../generated/PangoChef/Rewar
 export const ROUTER_ADDRESS = '{{PangolinRouter}}'
 export const WHBAR_ADDRESS = '{{WHBAR}}'
 export const PNG_ADDRESS = '{{PBAR}}'
-export const WHBAR_USDC_PAIR = '{{StablePair}}'
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
 
 export let ZERO_BI = BigInt.fromI32(0)
@@ -47,8 +46,10 @@ export function isNullEthValue(value: string): boolean {
 }
 
 export function _fetchTokenSymbol(tokenAddress: Address): string {
-    // hard coded overrides
-    // ...
+    // Overrides
+    {{#TokenOverrides}}
+    if (tokenAddress.toHexString() == "{{address}}") return "{{symbol}}"
+    {{/TokenOverrides}}
 
     let contract = ERC20.bind(tokenAddress)
     let contractSymbolBytes = ERC20SymbolBytes.bind(tokenAddress)
@@ -72,8 +73,10 @@ export function _fetchTokenSymbol(tokenAddress: Address): string {
 }
 
 export function _fetchTokenName(tokenAddress: Address): string {
-    // hard coded overrides
-    // ...
+    // Overrides
+    {{#TokenOverrides}}
+    if (tokenAddress.toHexString() == "{{address}}") return "{{name}}"
+    {{/TokenOverrides}}
 
     let contract = ERC20.bind(tokenAddress)
     let contractNameBytes = ERC20NameBytes.bind(tokenAddress)
@@ -97,8 +100,10 @@ export function _fetchTokenName(tokenAddress: Address): string {
 }
 
 export function _fetchTokenDecimals(tokenAddress: Address): BigInt | null {
-    // hardcode overrides
-    // ...
+    // Overrides
+    {{#TokenOverrides}}
+    if (tokenAddress.toHexString() == "{{address}}") return BigInt.fromI32({{decimals}}) // {{symbol}}
+    {{/TokenOverrides}}
 
     let contract = ERC20.bind(tokenAddress)
     // try types uint8 for decimals
