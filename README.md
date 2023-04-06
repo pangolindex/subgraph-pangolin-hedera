@@ -1,3 +1,3 @@
-# Subgraph-pangolin
+# subgraph-pangolin-hedera
 
-The condensed subgraphs for hedera networks (without maintaining LP positions per user).
+Subgraphs supporting Pangolin on Hedera.

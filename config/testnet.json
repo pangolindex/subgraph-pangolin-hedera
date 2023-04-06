@@ -1,5 +1,5 @@
 {
-  "network": "Hedera Testnet",
+  "network": "hedera-testnet",
   "startBlock": 69175,
   "WHBAR": "0x000000000000000000000000000000000000073d",
   "PBAR": "0x0000000000000000000000000000000000000744",

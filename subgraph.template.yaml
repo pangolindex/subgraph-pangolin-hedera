@@ -1,8 +1,8 @@
 # Generated from mustache template for network: {{network}}
 
 specVersion: 0.0.4
-description: Pangolin is a decentralized exchange for swapping Ethereum and Avalanche assets on Avalanche.
-repository: https://github.com/pangolindex/subgraph-pangolin
+description: Pangolin is a decentralized exchange.
+repository: https://github.com/pangolindex/subgraph-pangolin-hedera
 schema:
   file: ./schema.graphql
 dataSources:
