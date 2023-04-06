@@ -24,7 +24,6 @@ export function handleNewPair(event: PairCreated): void {
         factory.totalLiquidityUSD = ZERO_BD
         factory.txCount = ZERO_BI
 
-        // create new bundle
         let bundle = new Bundle('1')
         bundle.ethPrice = ZERO_BD
         bundle.save()
@@ -32,14 +31,13 @@ export function handleNewPair(event: PairCreated): void {
     factory.pairCount = factory.pairCount + 1
     factory.save()
 
-    // fetch info if null
     let token0 = Token.load(event.params.token0.toHexString())
     if (token0 === null) {
         token0 = new Token(event.params.token0.toHexString())
         token0.symbol = _fetchTokenSymbol(event.params.token0)
         token0.name = _fetchTokenName(event.params.token0)
+
         let decimals = _fetchTokenDecimals(event.params.token0)
-        // bail if we couldn't figure out the decimals
         if (decimals === null) {
             log.debug('null decimals for token0', [])
             return
@@ -52,23 +50,23 @@ export function handleNewPair(event: PairCreated): void {
         token0.tradeVolumeUSD = ZERO_BD
         token0.untrackedVolumeUSD = ZERO_BD
         token0.totalLiquidity = ZERO_BD
-        // token0.allPairs = []
         token0.txCount = ZERO_BI
+
+        token0.save()
     }
 
-    // fetch info if null
     let token1 = Token.load(event.params.token1.toHexString())
     if (token1 === null) {
         token1 = new Token(event.params.token1.toHexString())
         token1.symbol = _fetchTokenSymbol(event.params.token1)
         token1.name = _fetchTokenName(event.params.token1)
-        let decimals = _fetchTokenDecimals(event.params.token1)
 
-        // bail if we couldn't figure out the decimals
+        let decimals = _fetchTokenDecimals(event.params.token1)
         if (decimals === null) {
             log.debug('null decimals for token1', [])
             return
         }
+
         token1.decimals = decimals
         token1.derivedETH = ZERO_BD
         token1.derivedUSD = ZERO_BD
@@ -76,8 +74,9 @@ export function handleNewPair(event: PairCreated): void {
         token1.tradeVolumeUSD = ZERO_BD
         token1.untrackedVolumeUSD = ZERO_BD
         token1.totalLiquidity = ZERO_BD
-        // token1.allPairs = []
         token1.txCount = ZERO_BI
+
+        token1.save()
     }
 
     let pair = new Pair(event.params.pair.toHexString()) as Pair
@@ -112,10 +111,4 @@ export function handleNewPair(event: PairCreated): void {
 
     // create the tracked contract based on the template
     PairTemplate.create(event.params.pair)
-
-    // save updated values
-    token0.save()
-    token1.save()
-    pair.save()
-    factory.save()
 }

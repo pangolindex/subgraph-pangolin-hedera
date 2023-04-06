@@ -112,7 +112,6 @@ export function handleLogicalBurn(event: LogicalBurn): void {
     burn.pair = pair.id
     burn.liquidity = value
     burn.timestamp = transaction.timestamp
-    burn.save()
 
     // if this logical burn included a fee mint, account for this
     if (mints.length !== 0 && !isCompleteMint(mints[mints.length - 1])) {
@@ -360,7 +359,6 @@ export function handleSwap(event: Swap): void {
     pair.volumeToken1 = pair.volumeToken1.plus(amount1Total)
     pair.untrackedVolumeUSD = pair.untrackedVolumeUSD.plus(derivedAmountUSD)
     pair.txCount = pair.txCount.plus(ONE_BI)
-    pair.save()
 
     // update global values, only used tracked amounts for volume
     let pangolin = PangolinFactory.load('1')!
