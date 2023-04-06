@@ -12,7 +12,7 @@ import {
 } from "../../generated/StakingPositions/PangolinStakingPositions"
 
 // These values are hardcoded in PangolinStakingPositions
-let PANGOLIN_STAKING_POSITIONS_INITIAL_PERIOD_DURATION = BigInt.fromI32(86400)
+let PANGOLIN_STAKING_POSITIONS_INITIAL_PERIOD_DURATION = BigInt.fromI32(14 * 86400)
 let PANGOLIN_STAKING_POSITIONS_INITIAL_RENT = BigInt.fromI32(-1)
 
 
