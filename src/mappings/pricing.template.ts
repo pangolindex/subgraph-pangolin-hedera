@@ -4,8 +4,6 @@ import {BigDecimal} from '@graphprotocol/graph-ts'
 import {Pair, Token, Bundle, PairLookup} from '../../generated/schema'
 import {ZERO_BD, ADDRESS_ZERO, ONE_BD, WHBAR_ADDRESS, TWO_BD} from './helpers'
 
-let AVERAGE_WHBAR_PRICE_PRE_STABLES = BigDecimal.fromString('1')
-
 export function getAVAXPriceInUSD(): BigDecimal {
 
     let pair: Pair | null
@@ -18,7 +16,7 @@ export function getAVAXPriceInUSD(): BigDecimal {
     }
     {{/StablePairContracts}}
 
-    return AVERAGE_WHBAR_PRICE_PRE_STABLES
+    return ZERO_BD
 }
 
 // token where amounts should contribute to tracked volume and liquidity
