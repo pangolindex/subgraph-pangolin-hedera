@@ -3,27 +3,23 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "prepare:testnet": "mustache config/testnet.json subgraph.template.yaml > subgraph.yaml && mustache config/testnet.json src/mappings/helpers.template.ts > src/mappings/helpers.ts && mustache config/testnet.json src/mappings/pricing.template.ts > src/mappings/pricing.ts",
-    "prepare:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml && mustache config/mainnet.json src/mappings/helpers.template.ts > src/mappings/helpers.ts && mustache config/mainnet.json src/mappings/pricing.template.ts > src/mappings/pricing.ts",
-    "codegen:testnet": "mustache config/testnet.json subgraph.template.yaml > subgraph.yaml && graph codegen",
-    "codegen:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml && graph codegen",
-    "build:testnet": "yarn prepare:testnet && graph build",
-    "build:mainnet": "yarn prepare:mainnet && graph build",
-    "create:local": "graph create --node http://localhost:8020 local",
+    "template:testnet": "mustache config/testnet.json subgraph.template.yaml > subgraph.yaml && mustache config/testnet.json src/mappings/helpers.template.ts > src/mappings/helpers.ts && mustache config/testnet.json src/mappings/pricing.template.ts > src/mappings/pricing.ts",
+    "template:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml && mustache config/mainnet.json src/mappings/helpers.template.ts > src/mappings/helpers.ts && mustache config/mainnet.json src/mappings/pricing.template.ts > src/mappings/pricing.ts",
+
+    "build:testnet": "yarn template:testnet && graph codegen && graph build",
+    "build:mainnet": "yarn template:mainnet && graph codegen && graph build",
+
     "create:testnet": "graph create --node https://hedera-test.pangolin.network:8020 pangolin",
-    "create:testnet-staging": "graph create --node https://hedera-test.pangolin.network:8020 pangolin-staging",
-    "create:mainnet": "graph create --node https://hedera-graph.pangolin.network:8020 pangolin",
-    "create:mainnet-staging": "graph create --node https://hedera-graph.pangolin.network:8020 pangolin-staging",
-    "remove:local": "graph remove --node http://localhost:8020 local",
-    "remove:testnet": "graph remove --node https://hedera-test.pangolin.network:8020 pangolin",
-    "remove:testnet-staging": "graph remove --node https://hedera-test.pangolin.network:8020 pangolin-staging",
-    "remove:mainnet": "graph remove --node https://hedera-graph.pangolin.network:8020 pangolin",
-    "remove:mainnet-staging": "graph remove --node https://hedera-graph.pangolin.network:8020 pangolin-staging",
-    "deploy:local": "graph deploy --node http://localhost:8020 --ipfs http://localhost:5001 local",
     "deploy:testnet": "graph deploy --node https://hedera-test.pangolin.network:8020 --ipfs http://hedera-test.pangolin.network:5001 pangolin",
-    "deploy:testnet-staging": "graph deploy --node https://hedera-test.pangolin.network:8020 --ipfs http://hedera-test.pangolin.network:5001 pangolin-staging",
+    "remove:testnet": "graph remove --node https://hedera-test.pangolin.network:8020 pangolin",
+
+    "create:mainnet": "graph create --node https://hedera-graph.pangolin.network:8020 pangolin",
     "deploy:mainnet": "graph deploy --node https://hedera-graph.pangolin.network:8020 --ipfs http://hedera-graph.pangolin.network:5001 pangolin",
-    "deploy:mainnet-staging": "graph deploy --node https://hedera-graph.pangolin.network:8020 --ipfs http://hedera-graph.pangolin.network:5001 pangolin-staging"
+    "remove:mainnet": "graph remove --node https://hedera-graph.pangolin.network:8020 pangolin",
+
+    "create:local": "graph create --node http://localhost:8020 local",
+    "deploy:local": "graph deploy --node http://localhost:8020 --ipfs http://localhost:5001 local",
+    "remove:local": "graph remove --node http://localhost:8020 local"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "0.44.0",
