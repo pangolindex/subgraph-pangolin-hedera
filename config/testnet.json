@@ -13,5 +13,25 @@
   "WhitelistPricing": [
     "0x000000000000000000000000000000000040b1f0",
     "0x000000000000000000000000000000000040b1fa"
+  ],
+  "TokenOverrides": [
+    {
+      "address": "0x000000000000000000000000000000000040b1f0",
+      "symbol": "WHBAR",
+      "name": "Wrapped Hedera",
+      "decimals": 8
+    },
+    {
+      "address": "0x000000000000000000000000000000000040b1fa",
+      "symbol": "PBAR",
+      "name": "PBAR",
+      "decimals": 8
+    },
+    {
+      "address": "0x000000000000000000000000000000000045d5e2",
+      "symbol": "USDC",
+      "name": "USDC",
+      "decimals": 6
+    }
   ]
 }
