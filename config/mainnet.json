@@ -7,7 +7,7 @@
   "PangolinRouter": "0x00000000000000000000000000000000001a88c9",
   "PangoChef": "0x00000000000000000000000000000000001a88db",
   "PangolinStakingPositions": "0x00000000000000000000000000000000001a8957",
-  "StablePairs": [
+  "StablePairContracts": [
     "0xe34c472180a1252e2b837f82e48b6a19e6f29ffa"
   ],
   "WhitelistPricing": [

@@ -10,13 +10,13 @@ export function getAVAXPriceInUSD(): BigDecimal {
 
     let pair: Pair | null
 
-    // Iterated 'StablePairs' from config
-    {{#StablePairs}}
+    // Iterated 'StablePairContracts' from config
+    {{#StablePairContracts}}
     pair = Pair.load("{{.}}")
     if (pair != null) {
         return pair.token0 == WHBAR_ADDRESS ? pair.token1Price : pair.token0Price
     }
-    {{/StablePairs}}
+    {{/StablePairContracts}}
 
     return AVERAGE_WHBAR_PRICE_PRE_STABLES
 }
