@@ -3,23 +3,50 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "template:testnet": "mustache config/testnet.json subgraph.template.yaml > subgraph.yaml && mustache config/testnet.json src/mappings/helpers.template.ts > src/mappings/helpers.ts && mustache config/testnet.json src/mappings/pricing.template.ts > src/mappings/pricing.ts",
-    "template:mainnet": "mustache config/mainnet.json subgraph.template.yaml > subgraph.yaml && mustache config/mainnet.json src/mappings/helpers.template.ts > src/mappings/helpers.ts && mustache config/mainnet.json src/mappings/pricing.template.ts > src/mappings/pricing.ts",
+    "template:testnet-pangolin": "mustache config/testnet.json subgraph-pangolin.template.yaml > subgraph.yaml && mustache config/testnet.json schema-pangolin.template.graphql > schema.graphql && mustache config/testnet.json src/mappings/helpers.template.ts > src/mappings/helpers.ts && mustache config/testnet.json src/mappings/pricing.template.ts > src/mappings/pricing.ts",
+    "template:testnet-blocks": "mustache config/testnet.json subgraph-blocks.template.yaml > subgraph.yaml && mustache config/testnet.json schema-blocks.template.graphql > schema.graphql",
+    "template:testnet-governor": "mustache config/testnet.json subgraph-governor.template.yaml > subgraph.yaml && mustache config/testnet.json schema-governor.template.graphql > schema.graphql",
+    "template:mainnet-pangolin": "mustache config/mainnet.json subgraph-pangolin.template.yaml > subgraph.yaml && mustache config/mainnet.json schema-pangolin.template.graphql > schema.graphql&& mustache config/mainnet.json src/mappings/helpers.template.ts > src/mappings/helpers.ts && mustache config/mainnet.json src/mappings/pricing.template.ts > src/mappings/pricing.ts",
+    "template:mainnet-blocks": "mustache config/mainnet.json subgraph-blocks.template.yaml > subgraph.yaml && mustache config/mainnet.json schema-blocks.template.graphql > schema.graphql",
+    "template:mainnet-governor": "mustache config/mainnet.json subgraph-governor.template.yaml > subgraph.yaml && mustache config/mainnet.json schema-governor.template.graphql > schema.graphql",
 
-    "build:testnet": "yarn template:testnet && graph codegen && graph build",
-    "build:mainnet": "yarn template:mainnet && graph codegen && graph build",
+    "build": "graph codegen && graph build",
 
-    "create:testnet": "graph create --node https://hedera-test.pangolin.network:8020 pangolin",
-    "deploy:testnet": "graph deploy --node https://hedera-test.pangolin.network:8020 --ipfs http://hedera-test.pangolin.network:5001 pangolin",
-    "remove:testnet": "graph remove --node https://hedera-test.pangolin.network:8020 pangolin",
+    "create:testnet-pangolin": "graph create --node https://hedera-test.pangolin.network:8020 pangolin",
+    "deploy:testnet-pangolin": "graph deploy --node https://hedera-test.pangolin.network:8020 --ipfs http://hedera-test.pangolin.network:5001 pangolin",
+    "remove:testnet-pangolin": "graph remove --node https://hedera-test.pangolin.network:8020 pangolin",
 
-    "create:mainnet": "graph create --node https://hedera-graph.pangolin.network:8020 pangolin",
-    "deploy:mainnet": "graph deploy --node https://hedera-graph.pangolin.network:8020 --ipfs http://hedera-graph.pangolin.network:5001 pangolin",
-    "remove:mainnet": "graph remove --node https://hedera-graph.pangolin.network:8020 pangolin",
+    "create:testnet-blocks": "graph create --node https://hedera-test.pangolin.network:8020 blocks",
+    "deploy:testnet-blocks": "graph deploy --node https://hedera-test.pangolin.network:8020 --ipfs http://hedera-test.pangolin.network:5001 blocks",
+    "remove:testnet-blocks": "graph remove --node https://hedera-test.pangolin.network:8020 blocks",
 
-    "create:local": "graph create --node http://localhost:8020 local",
-    "deploy:local": "graph deploy --node http://localhost:8020 --ipfs http://localhost:5001 local",
-    "remove:local": "graph remove --node http://localhost:8020 local"
+    "create:testnet-governor": "graph create --node https://hedera-test.pangolin.network:8020 governor",
+    "deploy:testnet-governor": "graph deploy --node https://hedera-test.pangolin.network:8020 --ipfs http://hedera-test.pangolin.network:5001 governor",
+    "remove:testnet-governor": "graph remove --node https://hedera-test.pangolin.network:8020 governor",
+
+    "create:mainnet-pangolin": "graph create --node https://hedera-graph.pangolin.network:8020 pangolin",
+    "deploy:mainnet-pangolin": "graph deploy --node https://hedera-graph.pangolin.network:8020 --ipfs http://hedera-graph.pangolin.network:5001 pangolin",
+    "remove:mainnet-pangolin": "graph remove --node https://hedera-graph.pangolin.network:8020 pangolin",
+
+    "create:mainnet-blocks": "graph create --node https://hedera-graph.pangolin.network:8020 blocks",
+    "deploy:mainnet-blocks": "graph deploy --node https://hedera-graph.pangolin.network:8020 --ipfs http://hedera-graph.pangolin.network:5001 blocks",
+    "remove:mainnet-blocks": "graph remove --node https://hedera-graph.pangolin.network:8020 blocks",
+
+    "create:mainnet-governor": "graph create --node https://hedera-graph.pangolin.network:8020 governor",
+    "deploy:mainnet-governor": "graph deploy --node https://hedera-graph.pangolin.network:8020 --ipfs http://hedera-graph.pangolin.network:5001 governor",
+    "remove:mainnet-governor": "graph remove --node https://hedera-graph.pangolin.network:8020 governor",
+
+    "create:local-pangolin": "graph create --node http://localhost:8020 pangolin",
+    "deploy:local-pangolin": "graph deploy --node http://localhost:8020 --ipfs http://localhost:5001 pangolin",
+    "remove:local-pangolin": "graph remove --node http://localhost:8020 pangolin",
+
+    "create:local-blocks": "graph create --node http://localhost:8020 blocks",
+    "deploy:local-blocks": "graph deploy --node http://localhost:8020 --ipfs http://localhost:5001 blocks",
+    "remove:local-blocks": "graph remove --node http://localhost:8020 blocks",
+
+    "create:local-governor": "graph create --node http://localhost:8020 governor",
+    "deploy:local-governor": "graph deploy --node http://localhost:8020 --ipfs http://localhost:5001 governor",
+    "remove:local-governor": "graph remove --node http://localhost:8020 governor"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "0.44.0",

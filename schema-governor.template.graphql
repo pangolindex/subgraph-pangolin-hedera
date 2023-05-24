@@ -1,0 +1,19 @@
+type Proposal @entity {
+  id: ID!
+  targets: [Bytes!]!
+  values: [BigInt!]!
+  signatures: [String!]!
+  calldatas: [Bytes!]!
+
+  forVotes: BigInt!
+  againstVotes: BigInt!
+
+  startTime: BigInt!
+  endTime: BigInt!
+  eta: BigInt
+
+  description: String!
+
+  executed: Boolean!
+  canceled: Boolean!
+}

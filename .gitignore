@@ -23,6 +23,7 @@ Thumbs.db
 
 # Templating
 subgraph.yaml
+schema.graphql
 src/mappings/helpers.ts
 src/mappings/pricing.ts
 
