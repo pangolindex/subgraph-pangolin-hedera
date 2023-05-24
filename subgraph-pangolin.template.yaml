@@ -104,34 +104,6 @@ dataSources:
           handler: handlePeriodDurationUpdated
         - event: WeightSet(indexed uint256,uint256)
           handler: handleWeightSet
-  - kind: ethereum/contract
-    name: Governor
-    network: local
-    source:
-      address: "{{Governor}}"
-      abi: Governor
-      startBlock: {{startBlock}}
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.6
-      language: wasm/assemblyscript
-      file: ./src/mappings/governor.ts
-      entities:
-        - Proposal
-      abis:
-        - name: Governor
-          file: ./abis/Governor.json
-      eventHandlers:
-        - event: ProposalCreated(uint64,address[],uint256[],string[],bytes[],uint40,uint40,string)
-          handler: handleNewProposal
-        - event: ProposalCanceled(uint64)
-          handler: handleProposalCanceled
-        - event: ProposalExecuted(uint64)
-          handler: handleProposalExecuted
-        - event: VoteCast(uint64,bool,uint96)
-          handler: handleVoteCast
-        - event: ProposalQueued(uint64,uint40)
-          handler: handleProposalQueued
 templates:
   - kind: ethereum/contract
     name: Pair
