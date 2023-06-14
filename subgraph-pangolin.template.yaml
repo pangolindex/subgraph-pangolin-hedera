@@ -8,7 +8,7 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: Factory
-    network: local
+    network: {{network}}
     source:
       address: "{{PangolinFactory}}"
       abi: Factory
@@ -36,7 +36,7 @@ dataSources:
           handler: handleNewPair
   - kind: ethereum/contract
     name: StakingPositions
-    network: local
+    network: {{network}}
     source:
       address: "{{PangolinStakingPositions}}"
       abi: PangolinStakingPositions
@@ -69,7 +69,7 @@ dataSources:
           handler: handleSetRentInTinyBars
   - kind: ethereum/contract
     name: PangoChef
-    network: local
+    network: {{network}}
     source:
       address: "{{PangoChef}}"
       abi: PangoChef
@@ -107,7 +107,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: Pair
-    network: local
+    network: {{network}}
     source:
       abi: Pair
     mapping:

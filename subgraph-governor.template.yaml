@@ -8,7 +8,7 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: Governor
-    network: local
+    network: {{network}}
     source:
       address: "{{Governor}}"
       abi: Governor
