@@ -3,23 +3,33 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_assistant",
+        "name": "_TIMELOCK",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "_timelock",
+        "name": "_NFT_TOKEN",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "_nft",
+        "name": "_NFT_CONTRACT",
         "type": "address"
       },
       {
-        "internalType": "address",
-        "name": "_nftContract",
-        "type": "address"
+        "internalType": "uint96",
+        "name": "_PROPOSAL_THRESHOLD",
+        "type": "uint96"
+      },
+      {
+        "internalType": "uint96",
+        "name": "_PROPOSAL_THRESHOLD_MIN",
+        "type": "uint96"
+      },
+      {
+        "internalType": "uint96",
+        "name": "_PROPOSAL_THRESHOLD_MAX",
+        "type": "uint96"
       }
     ],
     "stateMutability": "nonpayable",
@@ -81,6 +91,12 @@
         "internalType": "uint64",
         "name": "id",
         "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "internalType": "int64",
+        "name": "proposer",
+        "type": "int64"
       },
       {
         "indexed": false,
@@ -165,6 +181,19 @@
     "inputs": [
       {
         "indexed": false,
+        "internalType": "uint96",
+        "name": "newProposalThreshold",
+        "type": "uint96"
+      }
+    ],
+    "name": "ProposalThresholdChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
         "internalType": "uint64",
         "name": "proposalId",
         "type": "uint64"
@@ -213,19 +242,6 @@
   },
   {
     "inputs": [],
-    "name": "ASSISTANT",
-    "outputs": [
-      {
-        "internalType": "contract IGovernorAssistant",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
     "name": "NFT_CONTRACT",
     "outputs": [
       {
@@ -253,6 +269,32 @@
   {
     "inputs": [],
     "name": "PROPOSAL_THRESHOLD",
+    "outputs": [
+      {
+        "internalType": "uint96",
+        "name": "",
+        "type": "uint96"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "PROPOSAL_THRESHOLD_MAX",
+    "outputs": [
+      {
+        "internalType": "uint96",
+        "name": "",
+        "type": "uint96"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "PROPOSAL_THRESHOLD_MIN",
     "outputs": [
       {
         "internalType": "uint96",
@@ -305,6 +347,19 @@
   {
     "inputs": [],
     "name": "__acceptAdmin",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint96",
+        "name": "newProposalThreshold",
+        "type": "uint96"
+      }
+    ],
+    "name": "__setProposalThreshold",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -382,6 +437,49 @@
     "name": "execute",
     "outputs": [],
     "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "proposalId",
+        "type": "uint64"
+      }
+    ],
+    "name": "locateProposal",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "proposalId",
+        "type": "uint64"
+      },
+      {
+        "internalType": "int64",
+        "name": "nftId",
+        "type": "int64"
+      }
+    ],
+    "name": "locateReceipt",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -484,7 +582,7 @@
     "name": "state",
     "outputs": [
       {
-        "internalType": "enum Governor.ProposalState",
+        "internalType": "enum GovernorPango.ProposalState",
         "name": "",
         "type": "uint8"
       }

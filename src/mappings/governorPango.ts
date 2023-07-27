@@ -6,25 +6,26 @@ import {
     ProposalExecuted,
     VoteCast,
     ProposalQueued,
-} from '../../generated/Governor/Governor';
+} from '../../generated/GovernorPango/GovernorPango';
 import {ZERO_BI} from './helpers';
 
 export function handleNewProposal(event: ProposalCreated): void {
     const proposal = new Proposal(event.params.id.toString());
-    proposal.description = event.params.description;
 
     // @ts-ignore;
     proposal.targets = changetype<Array<Bytes>>(event.params.targets);
     proposal.values = event.params.values;
     proposal.signatures = event.params.signatures;
     proposal.calldatas = event.params.calldatas;
-    proposal.description = event.params.description;
 
     proposal.forVotes = ZERO_BI;
     proposal.againstVotes = ZERO_BI;
 
     proposal.startTime = event.params.startTime;
     proposal.endTime = event.params.endTime;
+    proposal.eta = ZERO_BI;
+
+    proposal.description = event.params.description;
 
     proposal.executed = false;
     proposal.canceled = false;

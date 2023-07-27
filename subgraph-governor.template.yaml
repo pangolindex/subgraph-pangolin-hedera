@@ -7,24 +7,24 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: Governor
+    name: GovernorPango
     network: {{network}}
     source:
-      address: "{{Governor}}"
-      abi: Governor
-      startBlock: {{startBlock}}
+      address: "{{GovernorPango.address}}"
+      abi: GovernorPango
+      startBlock: {{GovernorPango.startBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
-      file: ./src/mappings/governor.ts
+      file: ./src/mappings/governorPango.ts
       entities:
         - Proposal
       abis:
-        - name: Governor
-          file: ./abis/Governor.json
+        - name: GovernorPango
+          file: ./abis/GovernorPango.json
       eventHandlers:
-        - event: ProposalCreated(uint64,address[],uint256[],string[],bytes[],uint40,uint40,string)
+        - event: ProposalCreated(uint64,int64,address[],uint256[],string[],bytes[],uint40,uint40,string)
           handler: handleNewProposal
         - event: ProposalCanceled(uint64)
           handler: handleProposalCanceled
