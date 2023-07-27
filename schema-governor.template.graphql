@@ -10,7 +10,7 @@ type Proposal @entity {
 
   startTime: BigInt!
   endTime: BigInt!
-  eta: BigInt!
+  eta: BigInt
 
   description: String!
 

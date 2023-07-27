@@ -23,7 +23,6 @@ export function handleNewProposal(event: ProposalCreated): void {
 
     proposal.startTime = event.params.startTime;
     proposal.endTime = event.params.endTime;
-    proposal.eta = ZERO_BI;
 
     proposal.description = event.params.description;
 
