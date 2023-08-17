@@ -25,17 +25,17 @@
     "remove:testnet-governor": "graph remove --node https://graph-hedera-test.pangolin.network/admin governor",
 
 
-    "create:mainnet-pangolin": "graph create --node https://hedera-main-v1.pangolin.network/admin pangolin",
-    "deploy:mainnet-pangolin": "graph deploy --node https://hedera-main-v1.pangolin.network/admin --ipfs https://ipfs.pangolin.network pangolin",
-    "remove:mainnet-pangolin": "graph remove --node https://hedera-main-v1.pangolin.network/admin pangolin",
+    "create:mainnet-pangolin": "graph create --node https://graph-hedera-main.pangolin.network/admin pangolin",
+    "deploy:mainnet-pangolin": "graph deploy --node https://graph-hedera-main.pangolin.network/admin --ipfs https://ipfs.pangolin.network pangolin",
+    "remove:mainnet-pangolin": "graph remove --node https://graph-hedera-main.pangolin.network/admin pangolin",
 
-    "create:mainnet-blocks": "graph create --node https://hedera-main-v1.pangolin.network/admin blocks",
-    "deploy:mainnet-blocks": "graph deploy --node https://hedera-main-v1.pangolin.network/admin --ipfs https://ipfs.pangolin.network blocks",
-    "remove:mainnet-blocks": "graph remove --node https://hedera-main-v1.pangolin.network/admin blocks",
+    "create:mainnet-blocks": "graph create --node https://graph-hedera-main.pangolin.network/admin blocks",
+    "deploy:mainnet-blocks": "graph deploy --node https://graph-hedera-main.pangolin.network/admin --ipfs https://ipfs.pangolin.network blocks",
+    "remove:mainnet-blocks": "graph remove --node https://graph-hedera-main.pangolin.network/admin blocks",
 
-    "create:mainnet-governor": "graph create --node https://hedera-main-v1.pangolin.network/admin governor",
-    "deploy:mainnet-governor": "graph deploy --node https://hedera-main-v1.pangolin.network/admin --ipfs https://ipfs.pangolin.network governor",
-    "remove:mainnet-governor": "graph remove --node https://hedera-main-v1.pangolin.network/admin governor",
+    "create:mainnet-governor": "graph create --node https://graph-hedera-main.pangolin.network/admin governor",
+    "deploy:mainnet-governor": "graph deploy --node https://graph-hedera-main.pangolin.network/admin --ipfs https://ipfs.pangolin.network governor",
+    "remove:mainnet-governor": "graph remove --node https://graph-hedera-main.pangolin.network/admin governor",
 
 
     "create:local-pangolin": "graph create --node http://localhost:8020 pangolin",
