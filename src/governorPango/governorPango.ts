@@ -1,4 +1,4 @@
-import {Bytes} from '@graphprotocol/graph-ts';
+import {BigInt, Bytes} from '@graphprotocol/graph-ts';
 import {Proposal} from '../../generated/schema';
 import {
     ProposalCreated,
@@ -7,7 +7,7 @@ import {
     VoteCast,
     ProposalQueued,
 } from '../../generated/GovernorPango/GovernorPango';
-import {ZERO_BI} from './helpers';
+let ZERO_BI = BigInt.fromI32(0)
 
 export function handleNewProposal(event: ProposalCreated): void {
     const proposal = new Proposal(event.params.id.toString());
